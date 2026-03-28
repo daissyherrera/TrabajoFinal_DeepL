@@ -1,6 +1,6 @@
-# SIATA Temperature Anomaly Detection
+# Temperature Anomaly Detection
 
-Deep learning project for detecting temperature anomalies in meteorological stations from the SIATA network (Medellín, Colombia).
+Deep learning project for detecting temperature anomalies in meteorological stations.
 
 ---
 
@@ -16,7 +16,7 @@ The SIATA (Sistema de Alerta Temprana de Medellín y el Valle de Aburrá) networ
 |------|------|-------------|
 | 68 | Jardin Botanico | ~1.8% |
 | 201 | Torre SIATA | ~2.3% |
-| 203 | UNAN | ~1.5% |
+| 203 | UNAL | ~1.5% |
 | 478 | Fiscalia General | 0% |
 
 ---
@@ -31,14 +31,14 @@ Source: `data/temperatura_estaciones_2025.csv` — 1.66M minutely records from 4
 | `estacion_nombre` | str | — | Station name |
 | `fecha_hora` | datetime | YYYY-MM-DD HH:MM:SS | Timestamp, 1-minute frequency |
 | `h` | float | % | Relative humidity. Valid range: [0, 100] |
-| `t` | float | °C | Ambient temperature. Expected range for Medellín (~1500 m.a.s.l.): [5, 45], typical: [15, 30] |
-| `pr` | float | hPa | Atmospheric pressure. Expected range: [800, 900] |
-| `vv` | float | m/s | Average wind speed. Valid range: [0, 50] |
-| `vv_max` | float | m/s | Maximum wind gust. Valid range: [0, 80], must be ≥ `vv` |
+| `t` | float | °C | Ambient temperature.  |
+| `pr` | float | hPa | Atmospheric pressure. |
+| `vv` | float | m/s | Average wind speed.|
+| `vv_max` | float | m/s | Maximum wind gust. must be ≥ `vv` |
 | `dv` | float | ° | Average wind direction (0–360, clockwise from North) |
 | `dv_max` | float | ° | Wind direction at maximum gust |
 | `p` | float | mm | Cumulative precipitation during the minute. Valid: ≥ 0 |
-| `calidad` | int | — | SIATA quality index. `1`/`2` = reliable; `153` = doubtful temperature; `154` = doubtful humidity; `155` = doubtful pressure |
+| `calidad` | int | — | SIATA quality index. `1`/`2` = reliable; `153` = doubtful temperature |
 | `calidad_dudosa` | bool | — | `True` if any variable has doubtful quality |
 | `temperatura_dudosa` | bool | — | `True` if temperature quality is doubtful — used as the **anomaly label** (~3.6% positive rate) |
 
