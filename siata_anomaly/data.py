@@ -1,16 +1,16 @@
-"""Data loading, preprocessing and windowing for SIATA temperature anomaly detection."""
+"""Data loading, preprocessing and windowing for temperature anomaly detection."""
 
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-FEATURE_COLS = ['t', 'h', 'pr', 'vv']
+FEATURE_COLS = ['t']
 LABEL_COL = 'temperatura_dudosa'
 
 
 def load_csv(path, stations=None):
-    """Load the SIATA CSV and return a clean DataFrame.
+    """Load the CSV and return a clean DataFrame.
 
     Args:
         path: Path to temperatura_estaciones_2025.csv.
