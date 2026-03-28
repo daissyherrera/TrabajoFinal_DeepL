@@ -132,30 +132,22 @@ siata_anomaly/
 
 ## How to Run in Google Colab
 
-### Step 1 — Upload data to Drive
-Upload `temperatura_estaciones_2025.csv` to your Google Drive at:
-```
-MyDrive/data/temperatura_estaciones_2025.csv
-```
-
-### Step 2 — Upload the project files
-Upload the repo root (or clone it) to your Drive at:
-```
-MyDrive/TrabajoFinal_DeepL/
-```
-
-### Step 3 — Open the notebook
-Open `anomaly_detection.ipynb` in Colab.
-
-### Step 4 — Configure paths (first code cell)
-Verify these two variables match your Drive layout:
+### Step 1 — Set your GitHub URL in the notebook
+In the second code cell, replace the placeholder with your actual repo URL:
 ```python
-REPO_PATH = '/content/drive/MyDrive/TrabajoFinal_DeepL'
-DATA_PATH = '/content/drive/MyDrive/TrabajoFinal_DeepL/data/temperatura_estaciones_2025.csv'
+REPO_URL = 'https://github.com/YOUR_USER/YOUR_REPO'
 ```
 
-### Step 5 — Run all cells
+### Step 2 — Open the notebook in Colab
+Upload `anomaly_detection.ipynb` to Colab or open it directly from GitHub.
+
+### Step 3 — Run all cells
 `Runtime → Run all`
+
+The notebook will automatically:
+1. Clone the repo (to get the `siata_anomaly` library)
+2. Download `temperatura_estaciones_2025.csv` from Google Drive via `gdown`
+3. Run all experiments end to end
 
 Expected total runtime: ~15–25 minutes on Colab GPU.
 
