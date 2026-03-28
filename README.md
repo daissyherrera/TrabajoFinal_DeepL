@@ -122,12 +122,6 @@ siata_anomaly/
 └── metrics.py        precision_recall_f1, plot_confusion_matrix, plot_training_history, summary_table
 ```
 
-**SOLID principles:**
-- **S** — each file has one responsibility (data, models, detection, evaluation)
-- **O** — `attach_head(backbone, trainable=...)` extends behavior without modifying the backbone
-- **I** — small, focused function signatures with no unnecessary dependencies
-- **D** — `AnomalyDetector` receives a trained model; it does not build or own one
-
 ---
 
 ## How to Run in Google Colab
@@ -139,7 +133,7 @@ REPO_URL = 'https://github.com/YOUR_USER/YOUR_REPO'
 ```
 
 ### Step 2 — Open the notebook in Colab
-Upload `anomaly_detection.ipynb` to Colab or open it directly from GitHub.
+Upload `anomaly_detection.ipynb` to Colab or open it directly from GitHub via the badge below.
 
 ### Step 3 — Run all cells
 `Runtime → Run all`
@@ -171,17 +165,9 @@ Set `IN_COLAB = False` at the top of the second cell if not in Colab (it is auto
 
 ---
 
-## Results & Conclusions
+## Results
 
-Results are generated at runtime in Section 6 of the notebook. The comparison table covers Precision, Recall, F1, and AUC-PR for all 5 variants.
-
-Key conclusions documented in the notebook:
-- **Weighted loss is essential** — without it, models collapse to always predicting "normal"
-- **Threshold calibration** significantly improves recall without sacrificing too much precision
-- **Residual block** improves over MLP by capturing local temporal patterns (sudden spikes)
-- **Transfer learning** (E3b fine-tuned) is expected to outperform training from scratch (E3c) when only 20% of target station data is available, validating cross-station feature reuse
-- **Station 478 (Fiscalia General)** has zero labeled anomalies in 2025 — a candidate for future unsupervised anomaly detection
-
+Results are generated at runtime in Section 6 of the notebook. The comparison table covers Precision, Recall, F1, and AUC-PR for all 5 variants (E1, E2, E3a, E3b, E3c). Conclusions are drawn dynamically from the computed metrics.
 
 ---
 
