@@ -1,4 +1,4 @@
-"""Model builders for SIATA temperature anomaly detection."""
+"""Model builders for temperature anomaly detection."""
 
 import tensorflow as tf
 
