@@ -23,7 +23,7 @@ The SIATA (Sistema de Alerta Temprana de Medellín y el Valle de Aburrá) networ
 
 ## Dataset
 
-Source: `data/temperatura_estaciones_2025.csv` — 1.66M minutely records from 4 stations, year 2025.
+Source: `temperatura_estaciones_2025.csv` — downloaded automatically via `gdown` (see notebook setup cell). 1.66M minutely records from 4 stations, year 2025.
 
 | Column | Type | Unit | Description |
 |--------|------|------|-------------|
@@ -51,10 +51,11 @@ Source: `data/temperatura_estaciones_2025.csv` — 1.66M minutely records from 4
 ### Stages
 
 1. **EDA** — visualize temperature time series per station, anomaly distribution, feature correlations.
-2. **Preprocessing** — normalize features with `StandardScaler`, build 30-minute sliding windows (stride=5), stratified train/val/test split (70/15/15).
-3. **Training** — each model is trained with `EarlyStopping(patience=5)` on the training set, monitored on validation loss.
-4. **Threshold calibration** — the decision threshold is swept from 0.05 to 0.95 on the validation set; the value that maximizes F1 is selected (not fixed at 0.5).
-5. **Evaluation** — final metrics are computed on the held-out test set.
+2. **Preprocessing** — normalize features with `StandardScaler` (fitted on train only), build 30-minute sliding windows (stride=5).
+3. **Temporal split** — each station's records divided chronologically: 70% train / 15% val / 15% test. Performed *before* windowing to prevent leakage from overlapping windows.
+4. **Training** — each model is trained with `EarlyStopping(patience=5)` on the training set, monitored on validation loss.
+5. **Threshold calibration** — the decision threshold is swept from 0.05 to 0.95 on the validation set; the value that maximizes F1 is selected (not fixed at 0.5).
+6. **Evaluation** — final metrics are computed on the held-out test set.
 
 ### Experiments
 

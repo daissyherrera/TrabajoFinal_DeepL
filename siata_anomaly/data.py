@@ -3,7 +3,6 @@
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
 
 FEATURE_COLS = ['t']
 LABEL_COL = 'temperatura_dudosa'
@@ -76,20 +75,34 @@ def make_windows(df, window_size=30, step=1, feature_cols=FEATURE_COLS, label_co
     return np.array(X_list, dtype=np.float32), np.array(y_list, dtype=np.float32)
 
 
-def split_data(X, y, val_size=0.15, test_size=0.15, seed=42):
-    """Stratified train/val/test split.
+def split_data(df, val_size=0.15, test_size=0.15):
+    """Temporal train/val/test split that respects time order within each station.
+
+    Splits each station's records chronologically (no shuffling), then
+    concatenates the per-station splits. This prevents data leakage that
+    would occur if sliding windows from the future were mixed into training.
+
+    Args:
+        df: DataFrame sorted by station and timestamp (output of load_csv).
+        val_size: Fraction of each station's records reserved for validation.
+        test_size: Fraction of each station's records reserved for testing.
 
     Returns:
-        (X_train, X_val, X_test, y_train, y_val, y_test)
+        (df_train, df_val, df_test)
     """
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, stratify=y, random_state=seed
+    train_parts, val_parts, test_parts = [], [], []
+    for _, station_df in df.groupby('codigo'):
+        n = len(station_df)
+        train_end = int(n * (1 - val_size - test_size))
+        val_end   = int(n * (1 - test_size))
+        train_parts.append(station_df.iloc[:train_end])
+        val_parts.append(station_df.iloc[train_end:val_end])
+        test_parts.append(station_df.iloc[val_end:])
+    return (
+        pd.concat(train_parts).reset_index(drop=True),
+        pd.concat(val_parts).reset_index(drop=True),
+        pd.concat(test_parts).reset_index(drop=True),
     )
-    val_ratio = val_size / (1 - test_size)
-    X_train, X_val, y_train, y_val = train_test_split(
-        X_train, y_train, test_size=val_ratio, stratify=y_train, random_state=seed
-    )
-    return X_train, X_val, X_test, y_train, y_val, y_test
 
 
 def compute_class_weight(y_train):
