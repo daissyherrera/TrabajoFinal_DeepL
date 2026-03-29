@@ -86,12 +86,12 @@ Source: `temperatura_estaciones_2025.csv` — downloaded automatically via `gdow
 
 ### E1 — MLP Baseline
 ```
-Input [30×4] → Flatten → Dense(128) + BatchNorm + Dropout(0.3) → Dense(64) → sigmoid
+Input [30×1] → Flatten → Dense(128) + BatchNorm + Dropout(0.3) → Dense(64) → sigmoid
 ```
 
 ### E2 — 1D-CNN with Residual Block
 ```
-Input [30, 4]
+Input [30, 1]
   → Conv1D(64, k=3) → BatchNorm
   → [Conv1D(128, k=3) → BatchNorm] + skip(Conv1D(128, k=1))   ← residual block
   → GlobalAveragePooling1D
