@@ -27,7 +27,10 @@ def precision_recall_f1(y_true, y_pred, probs=None):
     f1 = 2 * precision * recall / (precision + recall + 1e-8)
     result = {'precision': float(precision), 'recall': float(recall), 'f1': float(f1)}
     if probs is not None:
-        result['auc_pr'] = float(average_precision_score(y_true, probs))
+        if y_true.sum() == 0:
+            result['auc_pr'] = float('nan')
+        else:
+            result['auc_pr'] = float(average_precision_score(y_true, probs))
     return result
 
 
@@ -39,7 +42,7 @@ def plot_confusion_matrix(y_true, y_pred, title='Confusion Matrix'):
         y_pred: Binary predictions.
         title: Plot title.
     """
-    cm = confusion_matrix(y_true, y_pred)
+    cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
     fig, ax = plt.subplots(figsize=(5, 4))
     im = ax.imshow(cm, cmap='Blues')
     ax.set_xticks([0, 1])

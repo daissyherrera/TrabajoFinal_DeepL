@@ -75,7 +75,7 @@ def make_windows(df, window_size=30, step=1, feature_cols=FEATURE_COLS, label_co
     return np.array(X_list, dtype=np.float32), np.array(y_list, dtype=np.float32)
 
 
-def split_data(df, val_size=0.15, test_size=0.15):
+def split_data(df, val_size=0.20, test_size=0.45):
     """Temporal train/val/test split that respects time order within each station.
 
     Splits each station's records chronologically (no shuffling), then

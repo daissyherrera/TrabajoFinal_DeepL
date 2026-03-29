@@ -52,7 +52,7 @@ Source: `temperatura_estaciones_2025.csv` — downloaded automatically via `gdow
 
 1. **EDA** — visualize temperature time series per station, anomaly distribution, feature correlations.
 2. **Preprocessing** — normalize features with `StandardScaler` (fitted on train only), build 30-minute sliding windows (stride=5).
-3. **Temporal split** — each station's records divided chronologically: 70% train / 15% val / 15% test. Performed *before* windowing to prevent leakage from overlapping windows.
+3. **Temporal split** — each station's records divided chronologically: 35% train / 20% val / 45% test. Performed *before* windowing to prevent leakage. The non-standard ratio is required because all labeled anomalies are concentrated in Jan–Jun 2025; a 70/15/15 split would leave val and test entirely anomaly-free.
 4. **Training** — each model is trained with `EarlyStopping(patience=5)` on the training set, monitored on validation loss.
 5. **Threshold calibration** — the decision threshold is swept from 0.05 to 0.95 on the validation set; the value that maximizes F1 is selected (not fixed at 0.5).
 6. **Evaluation** — final metrics are computed on the held-out test set.
