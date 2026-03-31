@@ -1,6 +1,10 @@
 # Temperature Anomaly Detection
 
 Deep learning project for detecting temperature anomalies in meteorological stations.
+Ronald Vasquez CC.1233120
+Daissy Herrera CC.1037654924
+
+31/03/2026
 
 ---
 
@@ -50,7 +54,7 @@ Source: `temperatura_estaciones_2025.csv` — downloaded automatically via `gdow
 
 ### Stages
 
-1. **EDA** — visualize temperature time series per station, anomaly distribution, feature correlations.
+1. **EDA** — visualize temperature time series per station and anomaly distribution.
 2. **Preprocessing** — normalize features with `StandardScaler` (fitted on train only), build 30-minute sliding windows (stride=5).
 3. **Temporal split** — each station's records divided chronologically: 35% train / 20% val / 45% test. Performed *before* windowing to prevent leakage. The non-standard ratio is required because all labeled anomalies are concentrated in Jan–Jun 2025; a 70/15/15 split would leave val and test entirely anomaly-free.
 4. **Training** — each model is trained with `EarlyStopping(patience=5)` on the training set, monitored on validation loss.
@@ -136,33 +140,7 @@ REPO_URL = 'https://github.com/YOUR_USER/YOUR_REPO'
 ### Step 2 — Open the notebook in Colab
 Upload `anomaly_detection.ipynb` to Colab or open it directly from GitHub via the badge below.
 
-### Step 3 — Run all cells
-`Runtime → Run all`
-
-The notebook will automatically:
-1. Clone the repo (to get the `siata_anomaly` library)
-2. Download `temperatura_estaciones_2025.csv` from Google Drive via `gdown`
-3. Run all experiments end to end
-
 Expected total runtime: ~15–25 minutes on Colab GPU.
-
----
-
-## How to Run Locally
-
-```bash
-# 1. Clone the repo
-git clone <repo-url>
-cd TrabajoFinal_DeepL
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Launch Jupyter
-jupyter notebook anomaly_detection.ipynb
-```
-
-Set `IN_COLAB = False` at the top of the second cell if not in Colab (it is auto-detected).
 
 ---
 
