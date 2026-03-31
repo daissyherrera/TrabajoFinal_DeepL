@@ -1,7 +1,9 @@
 # Temperature Anomaly Detection
 
 Deep learning project for detecting temperature anomalies in meteorological stations.
+
 Ronald Vasquez CC.1233120
+
 Daissy Herrera CC.1037654924
 
 31/03/2026
